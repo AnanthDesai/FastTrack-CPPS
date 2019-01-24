@@ -1,38 +1,78 @@
 #include<stdio.h>
 #include<math.h>
 
-int getcoeff(int* a,int* b,int* c)
+//Function to input coefficients.
+
+void getCoeff(float* a,float* b,float* c)
  {
   printf("Enter the coefficients:\n");
-  scanf("%d%d%d",a,b,c);
-  return 0;
+  scanf("%f%f%f",a,b,c);
  }
 
-int computeroots(float* root1,float* root2,int a,int b,int c)
+//Function to get the discriminant.
+
+void getDiscriminant(float* discriminant,float a,float b,float c)
  {
-  float discriminant;
-  discriminant = (b*b)-(4*a*c);
+  *discriminant = (b*b)-(4*a*c);
+ }
+
+//Function to compute the real roots.
+
+void computeRealRoots(float* root1,float* root2,float discriminant,float a,float b,float c)
+ {
   *root1= (-b+sqrt(discriminant))/(2*a);
   *root2= (-b-sqrt(discriminant))/(2*a);
-  return discriminant;
  }
 
-int output(float root1,float root2)
+//Function to compute the imaginary roots.
+
+void computeComplexRoots(float* reRoot1,float* imRoot1,float* reRoot2,float* imRoot2,float a,float b,float c,float discriminant)
+ {
+  *reRoot1= (-b/(2*a));
+  *reRoot2= (-b/(2*a));
+  *imRoot1= (sqrt(discriminant))/(2*a);
+  *imRoot2= (sqrt(discriminant))/(2*a);
+ }
+
+//Function to print the real roots.
+
+void realRootsOutput(float root1,float root2)
  {
   printf("Root 1: %.2f\n",root1);
   printf("Root 2: %.2f\n",root2); 
-  return 0;
  }
+
+//Function to print the complex roots.
+
+void complexRootsOutput(float reRoot1,float imRoot1,float reRoot2,float imRoot2)
+ {
+  printf("The complex roots are:\n");
+  printf("Root 1: %.2f + %.2fi\n",reRoot1,imRoot1);
+  printf("Root 2: %.2f - %.2fi\n",reRoot2,imRoot2);
+ }
+
+//Main function
 
 int main()
  {
-  int a,b,c;
+  float a,b,c;
   float root1,root2,discriminant;
-  getcoeff(&a,&b,&c);
-  discriminant=computeroots(&root1,&root2,a,b,c);
+  float reRoot1,reRoot2,imRoot1,imRoot2;
+  
+  getCoeff(&a,&b,&c);
+  
+  getDiscriminant(&discriminant,a,b,c);
+  
   if(discriminant>=0)
-   output(root1,root2);
+   {
+    computeRealRoots(&root1,&root2,discriminant,a,b,c);
+    realRootsOutput(root1,root2);
+   }
   else
-   printf("Roots are not real!\n");
-  return 0;
- }
+   {
+    discriminant = -(discriminant);
+    computeComplexRoots(&reRoot1,&imRoot1,&reRoot2,&imRoot2,a,b,c,discriminant);
+    complexRootsOutput(reRoot1,imRoot1,reRoot2,imRoot2);
+   }
+ return 0;
+ }//main }
