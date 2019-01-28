@@ -1,0 +1,100 @@
+#include<stdio.h>
+#include<math.h>
+
+typedef struct complexRoots
+ {
+  float real;
+  float imag;
+ }comp;
+
+//Function to get the coefficients
+ 
+void getCoeff(float* a,float* b,float* c)
+ {
+  printf("Enter the coefficients:\n");
+  scanf("%f%f%f",a,b,c);
+ }
+
+//Function to compute discriminant
+
+void getDiscriminant(float* discriminant,float a,float b,float c)
+ {
+  *discriminant = (b*b)-(4*a*c);
+ }
+
+//Function to compute the real roots.
+
+void computeRealRoots(float* root1,float* root2,float discriminant,float a,float b,float c)
+ {
+  *root1= (-b+sqrt(discriminant))/(2*a);
+  *root2= (-b-sqrt(discriminant))/(2*a);
+ }
+
+//Function to compute imaginary roots
+
+void computeComplexRoots(comp* complx1,comp* complx2,float a,float b,float c,float discriminant)
+ {
+  complx1->real = (-b/(2*a));
+  complx2->real = (-b/(2*a));
+  complx1->imag = (sqrt(discriminant))/(2*a);
+  complx2->imag = (sqrt(discriminant))/(2*a);
+ }
+
+//Function to display the real roots
+
+void realRootsOutput(float root1,float root2)
+ {
+  printf("Root 1: %.2f\n",root1);
+  printf("Root 2: %.2f\n",root2); 
+ }
+
+//Function to print the complex roots
+
+void complexRootsOutput(comp complx1,comp complx2)
+ {
+  printf("The roots of the equation are:\n");
+  printf("Root 1: %.2f + %.2fi\n",complx1.real,complx1.imag);
+  printf("Root 2: %.2f + %.2fi\n",complx2.real,complx2.imag);
+ }
+
+//main function
+ 
+int main()
+ {
+  float a,b,c;
+  float discriminant;
+   
+  getCoeff(&a,&b,&c);
+  
+  getDiscriminant(&discriminant,a,b,c);
+  
+  if(discriminant>=0)
+   {
+    float root1=0,root2=0;
+    computeRealRoots(&root1,&root2,discriminant,a,b,c);
+    realRootsOutput(root1,root2);
+   }
+  else
+   {
+    comp complx1,complx2;
+    discriminant = -(discriminant);
+    computeComplexRoots(&complx1,&complx2,a,b,c,discriminant);
+    complexRootsOutput(complx1,complx2);
+   }
+ return 0;
+ }//main }
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
